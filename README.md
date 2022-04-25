@@ -1,4 +1,4 @@
-# SirMordred [![Build Status](https://github.com/chaoss/grimoirelab-sirmordred/workflows/build/badge.svg)](https://github.com/chaoss/grimoirelab-sirmordred/actions?query=workflow:build+branch:master+event:push) [![Coverage Status](https://coveralls.io/repos/github/chaoss/grimoirelab-sirmordred/badge.svg?branch=master)](https://coveralls.io/github/chaoss/grimoirelab-sirmordred?branch=master)
+# SirMordred [![Build Status](https://github.com/chaoss/grimoirelab-sirmordred/workflows/tests/badge.svg)](https://github.com/chaoss/grimoirelab-sirmordred/actions?query=workflow:tests+branch:master+event:push) [![Coverage Status](https://coveralls.io/repos/github/chaoss/grimoirelab-sirmordred/badge.svg?branch=master)](https://coveralls.io/github/chaoss/grimoirelab-sirmordred?branch=master)
 
 SirMordred is the tool used to coordinate the execution of the GrimoireLab platform, via two main configuration files, the `setup.cfg` and `projects.json`, which are summarized in their corresponding sections.
 
@@ -1434,7 +1434,7 @@ studies = [enrich_demography:weblate] (optional)
 
 Micro Mordred is a simplified version of Mordred which omits the use of its scheduler. Thus, Micro Mordred allows running single Mordred tasks (e.g., raw collection, enrichment) per execution.
 
-Micro Mordred is located in the [/utils](https://github.com/chaoss/grimoirelab-sirmordred/tree/master/utils/micro.py) folder of this same repository. It can be executed via command line, its parameters are summarized below:
+Micro Mordred is located in the [sirmordred/utils](https://github.com/chaoss/grimoirelab-sirmordred/tree/master/sirmordred/utils/micro.py) folder of this same repository. It can be executed via command line, its parameters are summarized below:
 ```
 --debug: execute Micro Mordred in debug mode
 
@@ -1455,7 +1455,7 @@ Micro Mordred is located in the [/utils](https://github.com/chaoss/grimoirelab-s
 
 Examples of possible executions are shown below:
 ```
-cd .../grimoirelab-sirmordred/utils/
+cd .../grimoirelab-sirmordred/sirmordred/utils/
 micro.py --raw --enrich --cfg ./setup.cfg --backends git # execute the Raw and Enrich tasks for the Git cfg section
 micro.py --panels # execute the Panels task to load the Sigils panels to Kibiter
 micro.py --raw --enrich --debug --cfg ./setup.cfg --backends groupsio --logs-dir logs # execute the raw and enriched tasks for the groupsio cfg section with debug mode on and logs being saved in the folder logs in the same directory as micro.py

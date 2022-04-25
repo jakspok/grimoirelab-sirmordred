@@ -1,6 +1,14 @@
-name: build
+name: tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '!**'
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
   tests:
@@ -18,7 +26,7 @@ jobs:
     name: Python ${{ matrix.python-version }} for ES ${{ matrix.elasticsearch-version }}
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
+        python-version: [3.7, 3.8]
         elasticsearch-version: [6.8.6]
     
     steps:
@@ -41,16 +49,17 @@ jobs:
       uses: elastic/elastic-github-actions/elasticsearch@master
       with:
         stack-version: ${{ matrix.elasticsearch-version }}
-      
+
+    - name: Install and set up Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "PATH=$HOME/.poetry/bin:$PATH" >> $GITHUB_ENV
+
     - name: Install dependencies
       run: |
-        pip install --upgrade pip==18.1
-        pip install --upgrade setuptools==49.6.0
-        pip install --upgrade wheel
-        pip install -r "requirements.txt"
-        pip install -r "requirements_tests.txt"
-        pip install flake8 coveralls
-      
+        poetry install -vvv
+        poetry add -D coveralls
+
     - name: Verify MySQL connection
       run: |
         sudo apt-get install -y mysql-client libmysqlclient-dev
@@ -62,14 +71,13 @@ jobs:
         curl -fsSL "http://localhost:9200/_cat/health?h=status"
       
     - name: Lint with flake8
-      run: flake8 . --exclude ./src
-      
+      run: |
+        poetry run flake8
+
     - name: Tests and Coverage
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         cd tests
-        coverage run --source=sirmordred run_tests.py
-        # --service=github is a workaround for bug
-        # https://github.com/coveralls-clients/coveralls-python/issues/251
-        coveralls --service=github
+        poetry run coverage run --source=sirmordred run_tests.py
+        poetry run coveralls --service=github
