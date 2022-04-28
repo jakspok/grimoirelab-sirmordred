@@ -10,7 +10,7 @@ license = "GPL-3.0+"
 readme = "README.md"
 
 homepage = "https://chaoss.github.io/grimoirelab/"
-repository = "https://github.com/chaoss/grimoirelab-sirmordred"
+repository = "https://github.com/jakspok/grimoirelab-sirmordred"
 
 keywords = [
     "development",
