@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Download distribution artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: sirmordred-dist
           path: dist
